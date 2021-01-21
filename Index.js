@@ -1,18 +1,36 @@
 
 class Building {
-  Offices = [];
+  offices = [];
    constructor(buildingName){
       this.buildingName = buildingName;
    }
 }
+class Company{
+    offices = []
+    constructor(companyName,companyDomain,foundYear){
+      this.companyName = companyName;
+      this.companyDomain = companyDomain;
+      this.foundYear = foundYear;
+    
+    }
+    assignOffice(office){
+        if(!office.assignCompany(this)){
+          console.log(`The office ${office.officeName} already belongs to company ${this.companyName},and therefore can not be assigned to other companies`);
+          return;
+        }
+        this.offices.push(office);
+        office.company= this.companyName;
+       
+}
+
+}
 
 class Office {
-  company = null;
-  boss = null;
-  programmers = null;
-
-  constructor(officeName) {
+    constructor(officeName) {
     this.officeName = officeName;
+    this.company = null;
+    this.boss = null;
+    this.programmer = null;
   }
   assignCompany(company) {
     if (this.company != null) {
@@ -30,67 +48,115 @@ class Office {
     return true;
   }
 
-  addProgrammers(programmers) {}
-}
-class Company{
-    offices = []
-    constructor(companyName,companyDomain,foundYear){
-      this.companyName = companyName;
-      this.companyDomain = companyDomain;
-      this.foundYear = foundYear;
+  addProgrammer(programmer){
+    if (this.programmer != null){
+        return false;
     }
+    this.programmer = programmer;
+    return true;
+  }
 }
-
 class Person {
-    constructor(personName,personAge){
-       this.personName = personName;
-       this.personAge = personAge;
+  constructor(personName, personAge, personOccupation) {
+    this.personName = personName;
+    this.personAge = personAge;
+    this.personOccupation = personOccupation;
+    this.company = null;
+    this.office = null;
+    this.building = null;
+  }
+  assignCompany(company) {
+    if (this.company != null) {
+      return false;
     }
-}
+    this.company = company;
+    return true;
+  }
+  assignOffice(office) {
+    if (this.office != null) {
+      return false;
+    }
+    this.office = office;
+    return true;
+  }
+  assignBuilding(building) {
+    if (this.building != null) {
+      return false;
+    }
+    this.building = building;
+    return true;
+  }
 
+  introducePerson() {
+    console.log(
+      `Hi,I'm ${this.personName}.I'm ${this.personAge} years old and i'm working for ${this.company.companyName} as a ${this.personOccupation}.My office name is "${this.office.officeName}",and it is located in ${this.building.buildingName} building.`
+    );
+  }
+}
 class Programmer extends Person {
-    constructor(personName,personAge,programmerExperience){
-    super(personName, personAge);
-      this.programmerExperience = programmerExperience;
-    }
-   
+  constructor(personName, personAge, personOccupation, programmerExperience) {
+    super(personName, personAge, personOccupation);
+    this.programmerExperience = programmerExperience;
+  }
 }
 class Boss extends Person {
-    constructor(personName,personAge,personFunction){
-    super(personName,personAge);
+  constructor(personName, personAge, personOccupation, personFunction) {
+    super(personName, personAge, personOccupation);
     this.personFunction = personFunction;
-    }
+  }
 }
+
 
 
 
 //......................................................
 
 
-let boss1 = new Boss("John",33,"team leader");
-let boss2 = new Boss("Marco",27,"program manager")
+let boss1 = new Boss("Marius",35,"Managing Director");
+let boss2 = new Boss("Pekka",57,"CEO");
+let boss3 = new Boss("Alexander",49,"CEO")
 
 
-let Programmer1 = new Programmer ("Jack",24,"junior software engineer");
-let Programmer2 = new Programmer("Mark", 30, "experienced software engineer ");
+let programmer1 = new Programmer ("Jack",24,"junior software engineer");
+let programmer2 = new Programmer("Mark", 30, "experienced software engineer ");
+let programmer3 = new Programmer("Mariana",35,"junior software engineer")
 
-let Company1 = new Company ("DCI","training",2017);
-let Company2 = new Company ("Nokia","Telecommunication",1865);
-let Company3 = new Company ("SAP","Software",1972);
+let company1 = new Company ("DCI","training",2017);
+let company2 = new Company ("Nokia","Telecommunication",1865);
+let company3 = new Company ("SAP","Software",1972);
 
-let Office1 = new Office ("Linus Torvalds");
-let Office2 = new Office("Doug Lea");
-let Office3 = new Office ("Helsinki")
+let office1 = new Office ("Linus Torvalds");
+let office2 = new Office("Doug Lea");
+let office3 = new Office ("Helsinki");
 
-let Building1 = new Building ("SkyTower1");
-let Building2 = new Building ("SkyTower2");
+let building1 = new Building("SkyTower1");
+let building2 = new Building("SkyTower2");
 
-Office1.assignBoss(boss1.personName);
-console.log(Office1.assignBoss);
+programmer2.assignCompany(company2);
+programmer2.assignOffice(office3);
+programmer2.assignBuilding(building1);
+programmer2.introducePerson();
+
+programmer1.assignCompany(company1);
+programmer1.assignOffice(office1);
+programmer1.assignBuilding(building2);
+programmer1.introducePerson();
+
+programmer3.assignCompany(company3);
+programmer3.assignOffice(office2);
+programmer3.assignBuilding(building1);
+programmer3.introducePerson();
+
+company1.assignOffice(office1);
+company2.assignOffice(office3);
+company3.assignOffice(office2);
 
 
-console.log(`Hi,I'm ${boss1.personName}.I'm ${boss1.personAge} years old and i'm working for ${Company2.companyName} as a ${boss1.personFunction}.My office name is "${Office3.officeName}",and it is located in ${Building1.buildingName} building.`);
+office1.assignBoss(boss1.personName);
+office2.assignBoss(boss3.personName);
+office3.assignBoss(boss2.personName);
 
-console.log(`Hi,I'm ${Programmer1.personName},I'm ${Programmer1.personAge} years old and i'm working for ${Company1.companyName} as a ${Programmer1.programmerExperience}.My office name is "${Office2.officeName}",and it is located in ${Building2.buildingName} building.`);
+console.log(company2);
 
-console.log(`Hi,I'm ${Programmer2.personName},i'm ${Programmer2.personAge} years old and i'm working for ${Company3.companyName} as a ${Programmer2.programmerExperience}.My office name is "${Office1.officeName}",and it is located in ${Building1.buildingName} building.`);
+
+
