@@ -22,10 +22,15 @@ class Company{
         office.company= this.companyName;
        
 }
+removeOffice(office){
+  var index = this.offices.indexOf(office);
+  if (index < 0) return;
+}
 
 }
 
 class Office {
+
     constructor(officeName) {
     this.officeName = officeName;
     this.company = null;
@@ -54,6 +59,9 @@ class Office {
     }
     this.programmer = programmer;
     return true;
+  }
+  moveProgrammer(office,newOffice){
+     
   }
 }
 class Person {
@@ -86,6 +94,7 @@ class Person {
     this.building = building;
     return true;
   }
+  
 
   introducePerson() {
     console.log(
@@ -134,27 +143,27 @@ let building2 = new Building("SkyTower2");
 
 programmer2.assignCompany(company2);
 programmer2.assignOffice(office3);
-programmer2.assignBuilding(building1);
-programmer2.introducePerson();
+// programmer2.assignBuilding(building1);
+// programmer2.introducePerson();
 
-programmer1.assignCompany(company1);
-programmer1.assignOffice(office1);
-programmer1.assignBuilding(building2);
-programmer1.introducePerson();
+// programmer1.assignCompany(company1);
+// programmer1.assignOffice(office1);
+// programmer1.assignBuilding(building2);
+// programmer1.introducePerson();
 
-programmer3.assignCompany(company3);
-programmer3.assignOffice(office2);
-programmer3.assignBuilding(building1);
-programmer3.introducePerson();
+// programmer3.assignCompany(company3);
+// programmer3.assignOffice(office2);
+// programmer3.assignBuilding(building1);
+// programmer3.introducePerson();
 
-company1.assignOffice(office1);
+// company1.assignOffice(office1);
 company2.assignOffice(office3);
-company3.assignOffice(office2);
+// company3.assignOffice(office2);
 
 
-office1.assignBoss(boss1.personName);
-office2.assignBoss(boss3.personName);
-office3.assignBoss(boss2.personName);
+// office1.assignBoss(boss1.personName);
+// office2.assignBoss(boss3.personName);
+// office3.assignBoss(boss2.personName);
 
 console.log(company2);
 
