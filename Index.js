@@ -60,8 +60,18 @@ class Office {
     this.programmer = programmer;
     return true;
   }
-  moveProgrammer(office,newOffice){
-     
+  removeProgrammer(programmer){
+    if(programmer.office != this){
+      console.log("Programmer does not belong to this office")
+      return;
+    }
+    this.programmer.splice(programmer, 1);
+    programmer.office = null;
+    console.log("Programmer has been successfully removed from the office")
+  }
+  moveProgrammerToOffice(programmer,office){
+     this.removeProgrammer(programmer);
+     office.addProgrammer(programmer);
   }
 }
 class Person {
@@ -165,7 +175,9 @@ company2.assignOffice(office3);
 // office2.assignBoss(boss3.personName);
 // office3.assignBoss(boss2.personName);
 
-console.log(company2);
+// console.log(company2);
+
+
 
 
 
